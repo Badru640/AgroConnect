@@ -7,8 +7,7 @@ export const Home = () => {
         <div data-theme="light">
             <Header/>
 
-            <h1 className=" text-black">Ola Mundo</h1>
-            <button className="btn btn-active btn-primary">Primary</button>
+           
             <Card/>
         </div>
         
