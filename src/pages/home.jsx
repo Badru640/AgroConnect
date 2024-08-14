@@ -5,8 +5,8 @@ export const Home = () => {
     return (
 
         <div data-theme="light">
-        
-        <Header/>
+
+            <Header/>
             <Card/>
         </div>
         
