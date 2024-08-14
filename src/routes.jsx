@@ -3,6 +3,7 @@ import { Home } from "./pages/home";
 import { DetailsPage } from "./pages/details";
 import { Dashboard } from "./pages/admin-dashboard";
 import AddAnuncio from "./components/addAnuncio";
+import { Login } from "./pages/login";
 
 export const route = createBrowserRouter([
   {
@@ -20,5 +21,9 @@ export const route = createBrowserRouter([
   {
     path: "/Add-Anuncio",
     element: <AddAnuncio />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
