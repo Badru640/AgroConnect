@@ -1,5 +1,9 @@
-export const Details = () => {
+import { Details } from "../components/details/details"
+
+export const DetailsPage = () => {
     return (
-        <h1>Detalhes</h1>
+        <div>
+            <Details/>
+        </div>
     )
 }
