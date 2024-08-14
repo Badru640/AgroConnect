@@ -76,7 +76,7 @@ const CreateProductForm = ({ onClose, onSubmit }) => {
     onSubmit(form);
   };
 
-  const categories = ["Electronics", "Clothing", "Home", "Books"]; // Adicione suas categorias
+  const categories = ["Vegetais", "Cereais", "Tuberculos", ];
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -101,14 +101,10 @@ const CreateProductForm = ({ onClose, onSubmit }) => {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Preço</label>
-           <input type="number"  />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Quantidade</label>
+            <label className="block text-gray-700">Nome</label>
             <input
               type="text"
-              name="quantity"
+              name="name"
               value={form.quantity}
               onChange={handleChange}
               className="w-full mt-2 p-2 border rounded"
@@ -116,10 +112,15 @@ const CreateProductForm = ({ onClose, onSubmit }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Localização</label>
+            <label className="block text-gray-700">Preço</label>
+           <input type="number"/>
+          </div>
+        
+          <div className="mb-4">
+            <label className="block text-gray-700">Discrição</label>
             <input
               type="text"
-              name="location"
+              name="description"
               value={form.location}
               onChange={handleChange}
               className="w-full mt-2 p-2 border rounded"
