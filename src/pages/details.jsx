@@ -1,11 +1,10 @@
 
-
-import { Details } from "../components/details/details"
+import { Details } from "../components/details/details";
 
 export const DetailsPage = () => {
-    return (
-        <div>
-            <Details/>
-        </div>
-    )
-}
+  return (
+    <div>
+      <Details />
+    </div>
+  );
+};
