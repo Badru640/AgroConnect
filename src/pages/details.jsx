@@ -1,4 +1,15 @@
 
+import { Details } from "../components/details/details"
+
+export const DetailsPage = () => {
+    return (
+        <div>
+            <Details/>
+        </div>
+    )
+}
+
+
 export const Details = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-cover bg-center" style={{ backgroundImage: 'url("/details-back4.jpg")' }}>
@@ -29,3 +40,4 @@ export const Details = () => {
         </div>
     );
 };
+
