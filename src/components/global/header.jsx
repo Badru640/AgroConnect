@@ -138,7 +138,7 @@ export const Header = () => {
                 {isDropdownOpen && (
                     <div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 w-80 sm:w-96 lg:w-112">
                         <div className="flex justify-between items-center p-4 border-b border-gray-200">
-                            <h3 className="text-lg font-semibold text-gray-800">Carrinho</h3>
+                            <h3 className="text-lg font-semibold text-gray-800">Cesto</h3>
                             <button
                                 className="text-gray-600 hover:text-gray-900 text-xl"
                                 onClick={handleCloseDropdown}
