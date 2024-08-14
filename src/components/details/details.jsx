@@ -14,7 +14,7 @@ export const Details = () => {
                         className="w-full h-full object-cover"
                     />
                 </figure>
-                <div className="card-body flex-1 p-4">
+                <div className="card-body flex-1  p-4">
                     <h2 className="card-title text-xl md:text-2xl lg:text-3xl">Alface</h2>
                     <p className="font-bold mt-2">Categoria: Salada sla</p>
                     <p className="font-bold mt-2">Descrição:</p>
