@@ -178,7 +178,7 @@ export const Header = () => {
                                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
                                 onClick={handleCheckout}
                             >
-                                Contactar
+                                Contacte-me
                             </button>
                         </div>
                     </div>
