@@ -1,5 +1,10 @@
 export const Home = () => {
     return (
-        <h1 className="text-white bg-black">Ola Mundo</h1>
+        <div data-theme="light">
+
+            <h1 className=" text-black">Ola Mundo</h1>
+            <button className="btn btn-active btn-primary">Primary</button>
+        </div>
+        
     )
 }
