@@ -4,6 +4,7 @@ import { FiAlertCircle } from "react-icons/fi";
 import { useCart } from "../CartContext"; // Import your cart context
 import { useAuth } from "../../AuthContext"; // Import useAuth
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion"; // Importar framer-motion
 
 const ProductModal = ({ product, onClose }) => {
     if (!product) return null;
@@ -14,7 +15,7 @@ const ProductModal = ({ product, onClose }) => {
     };
 
     // Criar o link para o WhatsApp
-    const whatsappLink = `https://wa.me/847640433?text=${createWhatsAppMessage()}`; // Substitua "1234567890" pelo número desejado
+    const whatsappLink = `https://wa.me/847640433?text=${createWhatsAppMessage()}`; // Substitua "847640433" pelo número desejado
 
     return (
         <div className="fixed inset-0 bg-green-900 bg-opacity-70 flex items-center justify-center z-50">
@@ -68,27 +69,20 @@ export const Card = () => {
             }
         };
 
+        fetchProducts();
+    }, []);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("http://localhost:3036/api/products");
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
+    const handleDetailsClick = (product) => {
+        setSelectedProduct(product);
     };
 
-    fetchProducts();
-  }, []);
+    const handleCloseModal = () => {
+        setSelectedProduct(null);
+    };
 
-  const handleDetailsClick = (product) => {
-    setSelectedProduct(product);
-  };
+    const handleAddToCart = (product) => {
+        addToCart(product);
+    };
 
     const handlePurchaseComplete = async (product) => {
         try {
@@ -109,22 +103,26 @@ export const Card = () => {
     return (
         <div className="flex flex-col min-h-screen bg-green-50">
             <main className="flex-grow mt-6 p-4">
-
-               {isAdmin && <Link to="/Add-Anuncio">
-                    <button className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition-colors duration-300 mb-6">
-                        Criar Anúncio
-                    </button>
-                </Link>}
-
+                {isAdmin && (
+                    <Link to="/Add-Anuncio">
+                        <button className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition-colors duration-300 mb-6">
+                            Criar Anúncio
+                        </button>
+                    </Link>
+                )}
                 <div className="products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {products.map((product) => (
-                        <div
+                        <motion.div
+                        
                             key={product._id}
                             className="border border-green-200 rounded-lg shadow-lg p-4 bg-white bg-opacity-80 transition-transform transform hover:scale-105"
                             style={{
                                 backgroundImage: "url('/textures/wood-bg.jpg')",
                                 backgroundSize: "cover",
                             }}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3 }}
                         >
                             <img
                                 src={product.imagem || "/default-image.jpg"}
@@ -150,7 +148,6 @@ export const Card = () => {
                                         Adicionar ao cesto
                                     </button>
                                 )}
-                                
                                 {isAdmin && (
                                     <button
                                         className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
@@ -160,73 +157,14 @@ export const Card = () => {
                                     </button>
                                 )}
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
-  const handleCloseModal = () => {
-    setSelectedProduct(null);
-  };
 
-  const handleAddToCart = (product) => {
-    addToCart(product);
-  };
-
-  return (
-    <div className="flex flex-col min-h-screen bg-green-50">
-      <main className="flex-grow mt-6 p-4">
-        <Link to="/Add-Anuncio">
-          <button className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition-colors duration-300 mb-6">
-            Criar Anúncio
-          </button>
-        </Link>
-
-        <div className="products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div
-              key={product._id}
-              className="border border-green-200 rounded-lg shadow-lg p-4 bg-white bg-opacity-80 transition-transform transform hover:scale-105"
-              style={{
-                backgroundImage: "url('/textures/wood-bg.jpg')",
-                backgroundSize: "cover",
-              }}
-            >
-              <img
-                src={product.imagem || "/default-image.jpg"}
-                alt={product.name}
-                className="w-full h-40 object-cover mb-4 rounded-lg border-2 border-green-300"
-                onError={(e) => (e.target.src = "/default-image.jpg")}
-              />
-              <h3 className="text-xl font-semibold mb-2 text-green-700">
-                {product.name}
-              </h3>
-              <p className="text-gray-700 text-sm mb-2">
-                {product.description}
-              </p>
-              <p className="text-green-600 font-semibold text-lg mb-2">
-                {product.price} mt
-              </p>
-              <div className="flex gap-3 justify-between mt-2">
-                <button
-                  className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
-                  onClick={() => handleDetailsClick(product)}
-                >
-                  <FiAlertCircle />
-                </button>
-                <button
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
-                  onClick={() => handleAddToCart(product)}
-                >
-                  Adicionar ao cesto
-                </button>
-              </div>
-            </div>
-          ))}
+                {selectedProduct && (
+                    <ProductModal product={selectedProduct} onClose={handleCloseModal} />
+                )}
+            </main>
         </div>
-
-        {selectedProduct && (
-          <ProductModal product={selectedProduct} onClose={handleCloseModal} />
-        )}
-      </main>
-    </div>
-  );
+    );
 };

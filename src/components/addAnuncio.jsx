@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Header } from "./global/header";
 
 export const AddAnuncio = () => {
   const [formData, setFormData] = useState({
@@ -42,6 +43,8 @@ export const AddAnuncio = () => {
   };
 
   return (
+    <div>
+<Header/>
     <div className="min-h-screen bg-gray-100 flex items-center justify-center relative">
       <Link to="/" className="inline-block absolute top-2 left-2">
         <button className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
@@ -133,6 +136,8 @@ export const AddAnuncio = () => {
         </form>
       </div>
     </div>
+    </div>
+
   );
 };
 
