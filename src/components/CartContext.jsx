@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { toast } from "react-toastify";
 
 const CartContext = createContext();
 
@@ -18,6 +19,16 @@ export const CartProvider = ({ children }) => {
                 return [...prev, { ...product, quantity: 1 }];
             }
         });
+        toast.success('Item adicionado ao cesto', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
     };
 
     const removeFromCart = (productId) => {

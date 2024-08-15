@@ -155,7 +155,7 @@ export const Card = () => {
                             transition={{ duration: 0.3 }}
                         >
                             <img
-                                src={product.imagem || "/details-back2.jpg"}
+                                src={product.imagem || "https://media.istockphoto.com/id/1192869169/pt/foto/single-object-of-fresh-cassava-root-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=gtWZYWrKqrdDAlZ7wSIIjFMnofo5D6octlYjKmiqPnU="}
                                 alt={product.name}
                                 className="w-full h-40 object-cover mb-4 rounded-lg border-2 border-green-300"
                                 onError={(e) => (e.target.src = "/default-image.jpg")}

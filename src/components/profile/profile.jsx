@@ -1,33 +1,42 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../global/header';
+import { useAuth } from '../../AuthContext';
 
 export const ProfilePage = () => {
     const navigate = useNavigate();
-
-
-    const user = JSON.parse(localStorage.getItem('user'));
-
-
-    const username = user ? user.username : 'Usuário';
-    const email = user ? user.email : 'Email não disponível';
-    const role = user ? user.role : 'Visitante';
-
+    const { user, isAdmin, logout } = useAuth();
+    const [isEditing, setIsEditing] = useState(false);
+    const [formData, setFormData] = useState({ username: user?.username || '' });
 
     const handleLogout = () => {
-        localStorage.removeItem('user');
+        logout();
         navigate('/login');
     };
 
-    return (
+    const handleEditToggle = () => {
+        setIsEditing(!isEditing);
+    };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSave = () => {
+        const updatedUser = { ...user, username: formData.username };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setFormData({ username: updatedUser.username });
+        setIsEditing(false);
+    };
+
+    return (
         <main className="profile-page">
             <Header />
             <section className="relative block h-[500px]">
                 <div
                     className="absolute top-0 w-full h-full bg-center bg-cover"
-                    style={{
-                        backgroundImage: "url('/diet-tomato-food-fresh-wallpaper-preview.jpg')",
-                    }}
+                    style={{ backgroundImage: "url('/diet-tomato-food-fresh-wallpaper-preview.jpg')" }}
                 >
                     <span id="blackOverlay" className="w-full h-full absolute opacity-50 bg-black"></span>
                 </div>
@@ -41,7 +50,6 @@ export const ProfilePage = () => {
                 <div className="container mx-auto px-4">
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full max-w-md mx-auto mb-6 shadow-xl rounded-lg -mt-32">
                         <div className="px-6 relative">
-                            {/* Profile Image */}
                             <div className="absolute top-[-75px] left-1/2 transform -translate-x-1/2">
                                 <img
                                     alt="Profile"
@@ -51,15 +59,37 @@ export const ProfilePage = () => {
                             </div>
                             <div className="text-center pt-24">
                                 <div className="mb-2 text-blueGray-600 mt-10">
-                                    <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i> {role === 'admin' ? 'Administrator' : 'User'}
+                                    <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i> {isAdmin ? 'Administrator' : 'User'}
                                 </div>
-                                <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700">
-                                    {username}
-                                </h3>
-                                <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                                    <i className="fas fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                                    {email}
-                                </div>
+                                {isEditing ? (
+                                    <div>
+                                        <input
+                                            type="text"
+                                            name="username"
+                                            value={formData.username}
+                                            onChange={handleInputChange}
+                                            className="mb-2 px-3 py-2 border rounded"
+                                        />
+                                        <button
+                                            onClick={handleSave}
+                                            className="bg-green-500 active:bg-green-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+                                        >
+                                            Save
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700">
+                                            {user?.username || 'Usuário'}
+                                        </h3>
+                                        <button
+                                            onClick={handleEditToggle}
+                                            className="bg-blue-500 active:bg-blue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+                                        >
+                                            Edit
+                                        </button>
+                                    </div>
+                                )}
                                 <div className="py-6 px-3 mt-6 sm:mt-0">
                                     <button
                                         onClick={handleLogout}
@@ -70,7 +100,6 @@ export const ProfilePage = () => {
                                     </button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

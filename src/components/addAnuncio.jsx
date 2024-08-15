@@ -50,8 +50,8 @@ export const AddAnuncio = () => {
       <Header />
       <div className="min-h-screen bg-gray-100 flex items-center justify-center relative">
         <Link to="/" className="inline-block absolute top-2 left-2">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            Home Page
+          <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300 ease-in-out focus:ring-opacity-50">
+            Ver Produtos
           </button>
         </Link>
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
