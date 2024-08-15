@@ -3,18 +3,13 @@ import { route } from "./routes";
 import { CartProvider } from "./components/CartContext";
 
 const App = () => {
-return(
-  <>
-<CartProvider>
-  <RouterProvider router={route} />
-  </CartProvider>
- </>
-)
-
+  return (
+    <>
+      <CartProvider>
+        <RouterProvider router={route} />
+      </CartProvider>
+    </>
+  );
 };
 
 export default App;
-
-
-
-
