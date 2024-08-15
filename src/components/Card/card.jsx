@@ -56,7 +56,7 @@ const ProductModal = ({ product, onClose }) => {
 export const Card = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [notification, setNotification] = useState(null); // Added state for notification
+  const [notification, setNotification] = useState(null);
   const { addToCart } = useCart();
   const { isAdmin } = useAuth();
 
@@ -91,46 +91,42 @@ export const Card = () => {
 
   const handlePurchaseComplete = async (product) => {
     try {
-      const response = await fetch(
-        `http://localhost:3036/api/products/${product._id}/complete`,
-        {
-          method: "PUT",
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to update product status");
-      }
-
-      // Update state to remove the product from the list
       setProducts((prevProducts) =>
         prevProducts.filter((p) => p._id !== product._id)
       );
 
-      // Set success notification
+      const response = await fetch(
+        `http://localhost:3036/api/products/${product._id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete product");
+
+        //
+        setProducts((prevProducts) => [...prevProducts, product]);
+      }
+
       setNotification({
         type: "success",
-        message: "Compra concluída com sucesso!",
+        message: "Compra concluída e produto removido com sucesso!",
       });
-
-      // Clear the notification after a short delay
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
     } catch (error) {
       console.error("Error completing purchase:", error);
+
       setNotification({
         type: "error",
         message: "Erro ao concluir a compra. Tente novamente mais tarde.",
       });
-
-      // Clear the notification after a short delay
+    } finally {
       setTimeout(() => {
         setNotification(null);
       }, 5000);
     }
   };
 
-  // Function to close notification
   const handleNotificationClose = () => {
     setNotification(null);
   };
