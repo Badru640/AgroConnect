@@ -1,33 +1,49 @@
-
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { PiBasketBold } from "react-icons/pi";
-import { FaTimes } from "react-icons/fa";
-import { useCart } from "../CartContext";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { PiBasketBold } from 'react-icons/pi';
+import { FaTimes } from 'react-icons/fa';
+import { useCart } from '../CartContext';
+import { useAuth } from '../../AuthContext'; // Import useAuth
 
 export const Header = () => {
-    const { cart, removeFromCart } = useCart(); // Acesse o estado do carrinho e a função de remoção
-    const [isDropdownOpen, setDropdownOpen] = useState(false); // Gerenciar a visibilidade do dropdown
+    const { cart, removeFromCart } = useCart();
+    const { user, isAdmin, logout } = useAuth(); // Get user info and role
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
-        setDropdownOpen((prev) => !prev);
+        setDropdownOpen(prev => !prev);
     };
 
     const handleCloseDropdown = () => {
         setDropdownOpen(false);
     };
 
-    const handleCheckout = () => {
-        // Redirecione para a página de checkout ou abra um modal de checkout
-        console.log('Iniciar checkout');
+    const handleRemove = (productId, index) => {
+        // Remove only the product at the given index
+        removeFromCart(productId, index);
     };
 
-    const handleRemove = (productId) => {
-        removeFromCart(productId);
+    const handleLogout = () => {
+        logout(); // Call the logout function from AuthContext
+        handleCloseDropdown();
     };
+
+    const uniqueProductsCount = cart.length;
+
+    const createWhatsAppMessage = () => {
+        let message = "Olá! Gostaria de encomendar os seguintes produtos:\n\n";
+        cart.forEach((item, index) => {
+            message += `${index + 1}. ${item.name} - ${item.quantity} unidade(s) a ${item.price} mt cada\n`;
+        });
+        message += `\nTotal de produtos: ${cart.length}`;
+        return encodeURIComponent(message);
+    };
+
+    // Criar o link para o WhatsApp
+    const whatsappLink = `https://wa.me/847640433?text=${createWhatsAppMessage()}`; // Substitua "1234567890" pelo número desejado
 
     return (
-        <div className="navbar shadow-lg rounded-xl bg-base-100">
+        <div className="navbar shadow-lg rounded-sm bg-gradient-to-r from-green-500 via-green-400 to-green-300">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -36,48 +52,57 @@ export const Header = () => {
                             className="h-5 w-5"
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke="currentColor">
+                            stroke="currentColor"
+                        >
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 strokeWidth="2"
-                                d="M4 6h16M4 12h16M4 18h7" />
+                                d="M4 6h16M4 12h16M4 18h7"
+                            />
                         </svg>
                     </div>
-                   <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <Link to="/profile">Perfil</Link>
-            </li>
-            <li>
-              <Link to="/settings">Configurações</Link>
-            </li>
-            <li>
-              <Link to="/help">Ajuda</Link>
-            </li>
-          </ul>
+                    <ul
+                        tabIndex={0}
+                        className="menu menu-sm dropdown-content bg-green-300 rounded-box z-[1] mt-3 w-52 md:w-64 p-2 shadow-xl"
+                    >
+                        {isAdmin && (
+                            <li>
+                                <Link to="/dashboard">Dashboard</Link>
+                            </li>
+                        )}
+                        <li>
+                            <Link to="/profile">Perfil</Link>
+                        </li>
+                        {user ? (
+                            <li>
+                                <button onClick={handleLogout}>Sair ({user.username})</button>
+                            </li>
+                        ) : (
+                            <li>
+                                <Link to="/login">Iniciar Sessão</Link>
+                            </li>
+                        )}
+                    </ul>
                 </div>
             </div>
             <div className="navbar-center">
-                <a className="btn btn-ghost text-xl">AgroConnect</a>
+               <Link to={"/"} className="text-2xl md:text-4xl font-bold text-white animate-glow">
+                AgroConnect
+               </Link>
             </div>
             <div className="navbar-end relative flex items-center">
-                <button
+               { !isAdmin && <button
                     className="btn btn-ghost btn-circle flex items-center relative"
                     onClick={toggleDropdown}
                 >
                     <PiBasketBold className="text-2xl" />
-                    {cart.length > 0 && (
+                    {uniqueProductsCount > 0 && (
                         <span className="absolute top-0 right-0 -translate-x-1/2 translate-y-1/2 inline-flex items-center justify-center w-4 h-4 bg-red-500 text-white text-xs font-bold rounded-full">
-                            {cart.length}
+                            {uniqueProductsCount}
                         </span>
                     )}
-                </button>
+                </button>}
                 {isDropdownOpen && (
                     <div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 w-80 sm:w-96 lg:w-112">
                         <div className="flex justify-between items-center p-4 border-b border-gray-200">
@@ -92,8 +117,8 @@ export const Header = () => {
                         </div>
                         <ul className="py-2">
                             {cart.length > 0 ? (
-                                cart.map((product) => (
-                                    <li key={product._id} className="flex items-center p-4 border-b border-gray-200">
+                                cart.map((product, index) => (
+                                    <li key={`${product._id}-${index}`} className="flex items-center p-4 border-b border-gray-200">
                                         <img
                                             src={product.imagem || "/default-image.jpg"}
                                             alt={product.name}
@@ -101,11 +126,11 @@ export const Header = () => {
                                         />
                                         <div className="flex-1">
                                             <p className="text-sm font-semibold text-gray-800">{product.name}</p>
-                                            <p className="text-xs text-gray-600">{product.price} mt</p>
+                                            <p className="text-xs text-gray-600">{product.price} mt (x{product.quantity})</p>
                                         </div>
                                         <button
                                             className="text-red-500 hover:text-red-700 ml-4"
-                                            onClick={() => handleRemove(product._id)}
+                                            onClick={() => handleRemove(product._id, index)}
                                             aria-label="Remover do carrinho"
                                         >
                                             <FaTimes />
@@ -117,17 +142,18 @@ export const Header = () => {
                             )}
                         </ul>
                         <div className="p-4 border-t border-gray-200 text-center">
-                            <button
+                            <a
+                                href={whatsappLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
-                                onClick={handleCheckout}
                             >
-                                Contacte-me
-                            </button>
+                                Enviar Mensagem no WhatsApp
+                            </a>
                         </div>
                     </div>
                 )}
             </div>
         </div>
     );
-
 };
