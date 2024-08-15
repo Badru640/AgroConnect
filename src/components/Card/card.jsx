@@ -104,9 +104,6 @@ export const Card = () => {
 
             if (!response.ok) {
                 throw new Error("Failed to delete product");
-
-                //
-                setProducts((prevProducts) => [...prevProducts, product]);
             }
 
             setNotification({
@@ -155,9 +152,10 @@ export const Card = () => {
                             transition={{ duration: 0.3 }}
                         >
                             <img
-                                src={product.imagem || "https://media.istockphoto.com/id/1192869169/pt/foto/single-object-of-fresh-cassava-root-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=gtWZYWrKqrdDAlZ7wSIIjFMnofo5D6octlYjKmiqPnU="}
+                                src={product.imagem || "https://p2.trrsf.com/image/fget/cf/940/0/images.terra.com/2022/06/16/istock-1329141177-(1)-1iemoq2gsyqex.jpg"}
                                 alt={product.name}
-                                className="w-full h-40 object-cover mb-4 rounded-lg border-2 border-green-300"
+                                className="w-full h-40 object-cover mb-4 rounded-lg border-2 border-green-300 cursor-pointer"
+                                onClick={() => handleDetailsClick(product)} 
                                 onError={(e) => (e.target.src = "/default-image.jpg")}
                             />
                             <h3 className="text-xl font-semibold mb-2 text-green-700">
