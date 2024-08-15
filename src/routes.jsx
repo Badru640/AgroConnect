@@ -5,6 +5,8 @@ import { Dashboard } from "./pages/admin-dashboard";
 import AddAnuncio from "./components/addAnuncio";
 import { Login } from "./pages/login";
 import { ErrorPage } from "./pages/errorpage.jsx";
+import { ProfilePage } from "./components/profile/profile.jsx";
+
 
 export const route = createBrowserRouter([
   {
@@ -27,5 +29,9 @@ export const route = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/profile",
+    element: <ProfilePage />,
   },
 ]);
