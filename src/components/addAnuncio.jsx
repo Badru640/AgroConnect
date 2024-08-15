@@ -8,7 +8,7 @@ export const AddAnuncio = () => {
     name: "",
     description: "",
     price: "",
-    category: "",
+    categoryName: "", // Alterado para categoryName
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -38,7 +38,7 @@ export const AddAnuncio = () => {
       }
 
       setSuccess("Product added successfully!");
-      setFormData({ name: "", description: "", price: "", category: "" });
+      setFormData({ name: "", description: "", price: "", categoryName: "" });
       navigate("/");
     } catch (error) {
       setError("Error adding product. Please try again.");
@@ -78,18 +78,18 @@ export const AddAnuncio = () => {
               </div>
               <div>
                 <label
-                  htmlFor="category"
+                  htmlFor="categoryName"
                   className="block text-gray-700 text-left font-medium"
                 >
-                  Category
+                  Category Name
                 </label>
                 <input
                   type="text"
-                  id="category"
-                  name="category"
-                  value={formData.category}
+                  id="categoryName"
+                  name="categoryName"
+                  value={formData.categoryName}
                   onChange={handleChange}
-                  placeholder="Category"
+                  placeholder="Category Name"
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
                   required
                 />
