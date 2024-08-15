@@ -47,7 +47,7 @@ export const AddAnuncio = () => {
       <Header />
       <div className="min-h-screen bg-gray-100 flex items-center justify-center relative">
         <Link to="/" className="inline-block absolute top-2 left-2">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+          <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
             Home Page
           </button>
         </Link>
@@ -94,7 +94,7 @@ export const AddAnuncio = () => {
                   htmlFor="address"
                   className="block text-gray-700 text-left font-medium mt-4"
                 >
-                  Localizacao
+                  Price
                 </label>
                 <input
                   type="text"
@@ -110,7 +110,7 @@ export const AddAnuncio = () => {
                 htmlFor="description"
                 className="block text-gray-700 text-left font-medium"
               >
-                Store Description
+                Produt Description
               </label>
               <textarea
                 id="description"
@@ -118,7 +118,7 @@ export const AddAnuncio = () => {
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="Produts Description"
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500 h-32 resize-none"
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500 h-32 resize-none"
               ></textarea>
             </div>
 
@@ -128,7 +128,7 @@ export const AddAnuncio = () => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
               >
                 Register
               </button>
