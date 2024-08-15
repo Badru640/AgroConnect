@@ -31,10 +31,14 @@ const ProductModal = ({ product, onClose }) => {
                     {product.name}
                 </h2>
                 <img
-                    src={product.imagem || "/default-image.jpg"}
+                    src={
+                        product.imagem ?
+                            product.imagem :
+                            product.category && product.category.name === "Cereais" ?
+                                "https://i2.wp.com/www.myfarm.com.br/wp-content/uploads/2021/04/186425.jpg" :
+                                "https://cptstatic.s3.amazonaws.com/imagens/enviadas/materias/materia9338/horta-como-plantar-couve-artigos-cursos-cpt.jpg"}
                     alt={product.name}
                     className="w-full h-80 object-cover mb-4 rounded-lg"
-                    onError={(e) => (e.target.src = "/default-image.jpg")}
                 />
                 <p className="text-gray-800 mb-4 text-lg">{product.description}</p>
                 <p className="text-green-700 font-bold text-xl mb-4">
@@ -151,13 +155,18 @@ export const Card = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.3 }}
                         >
-                            <img
-                                src={product.imagem || "https://p2.trrsf.com/image/fget/cf/940/0/images.terra.com/2022/06/16/istock-1329141177-(1)-1iemoq2gsyqex.jpg"}
-                                alt={product.name}
-                                className="w-full h-40 object-cover mb-4 rounded-lg border-2 border-green-300 cursor-pointer"
-                                onClick={() => handleDetailsClick(product)} 
-                                onError={(e) => (e.target.src = "/default-image.jpg")}
-                            />
+                           
+                             <img
+                    src={
+                        product.imagem ?
+                            product.imagem :
+                            product.category && product.category.name === "Cereais" ?
+                                "https://i2.wp.com/www.myfarm.com.br/wp-content/uploads/2021/04/186425.jpg" :
+                                "https://cptstatic.s3.amazonaws.com/imagens/enviadas/materias/materia9338/horta-como-plantar-couve-artigos-cursos-cpt.jpg"}
+                    alt={product.name}
+                    className="w-full h-40 object-cover mb-4 rounded-lg"
+                    onClick={() => handleDetailsClick(product)}
+                />
                             <h3 className="text-xl font-semibold mb-2 text-green-700">
                                 {product.name}
                             </h3>

@@ -77,7 +77,18 @@ export const AddAnuncio = () => {
                 />
               </div>
               <div>
-                <label
+                <select 
+                 value={formData.categoryName}
+                 onChange={handleChange}
+                 placeholder="Category Name"
+                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
+                 required
+                name="categoryName" id="categoryName">
+                  <option value="vegetais">Vegetais</option>
+                  <option value="Frutos">Frutos</option>
+                  <option value="cereais">Cereais</option>
+                </select>
+                {/* <label
                   htmlFor="categoryName"
                   className="block text-gray-700 text-left font-medium"
                 >
@@ -92,7 +103,7 @@ export const AddAnuncio = () => {
                   placeholder="Category Name"
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
                   required
-                />
+                /> */}
                 <label
                   htmlFor="price"
                   className="block text-gray-700 text-left font-medium mt-4"
