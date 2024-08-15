@@ -28,12 +28,10 @@ export const Header = () => {
         handleCloseDropdown();
     };
 
-    // Calcular o número total de produtos únicos
     const uniqueProductsCount = cart.length;
 
-    // Criar a mensagem para o WhatsApp
     const createWhatsAppMessage = () => {
-        let message = "Olá! Gostaria de saber mais sobre os seguintes produtos:\n\n";
+        let message = "Olá! Gostaria de encomendar os seguintes produtos:\n\n";
         cart.forEach((item, index) => {
             message += `${index + 1}. ${item.name} - ${item.quantity} unidade(s) a ${item.price} mt cada\n`;
         });
@@ -42,7 +40,7 @@ export const Header = () => {
     };
 
     // Criar o link para o WhatsApp
-    const whatsappLink = `https://wa.me/1234567890?text=${createWhatsAppMessage()}`; // Substitua "1234567890" pelo número desejado
+    const whatsappLink = `https://wa.me/847640433?text=${createWhatsAppMessage()}`; // Substitua "1234567890" pelo número desejado
 
     return (
         <div className="navbar shadow-lg rounded-sm bg-gradient-to-r from-green-500 via-green-400 to-green-300">
@@ -94,7 +92,7 @@ export const Header = () => {
                </Link>
             </div>
             <div className="navbar-end relative flex items-center">
-                <button
+               { !isAdmin && <button
                     className="btn btn-ghost btn-circle flex items-center relative"
                     onClick={toggleDropdown}
                 >
@@ -104,7 +102,7 @@ export const Header = () => {
                             {uniqueProductsCount}
                         </span>
                     )}
-                </button>
+                </button>}
                 {isDropdownOpen && (
                     <div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 w-80 sm:w-96 lg:w-112">
                         <div className="flex justify-between items-center p-4 border-b border-gray-200">

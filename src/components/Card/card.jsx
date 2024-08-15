@@ -38,7 +38,7 @@ export const Card = () => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { addToCart } = useCart();
-    const { user, isAdmin } = useAuth(); // Get user info and role
+    const {  isAdmin } = useAuth(); // Get user info and role
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -89,11 +89,11 @@ export const Card = () => {
         <div className="flex flex-col min-h-screen bg-green-50">
             <main className="flex-grow mt-6 p-4">
 
-                <Link to="/Add-Anuncio">
+               {isAdmin && <Link to="/Add-Anuncio">
                     <button className="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition-colors duration-300 mb-6">
                         Criar Anúncio
                     </button>
-                </Link>
+                </Link>}
 
                 <div className="products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {products.map((product) => (
