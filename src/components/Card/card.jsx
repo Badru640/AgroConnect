@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { FiAlertCircle } from "react-icons/fi";
 import { useCart } from "../CartContext"; // Import your cart context
+import { useAuth } from "../../AuthContext"; // Import useAuth
 import { Link } from "react-router-dom";
 
 const ProductModal = ({ product, onClose }) => {
@@ -37,6 +38,7 @@ export const Card = () => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { addToCart } = useCart();
+    const { user, isAdmin } = useAuth(); // Get user info and role
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -65,6 +67,22 @@ export const Card = () => {
 
     const handleAddToCart = (product) => {
         addToCart(product);
+    };
+
+    const handlePurchaseComplete = async (product) => {
+        try {
+            // Call to backend to mark the purchase as complete
+            const response = await fetch(`http://localhost:3036/api/products/${product._id}/complete`, {
+                method: 'PUT',
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update product status');
+            }
+            // Remove the product from local state
+            setProducts(prevProducts => prevProducts.filter(p => p._id !== product._id));
+        } catch (error) {
+            console.error('Error completing purchase:', error);
+        }
     };
 
     return (
@@ -97,18 +115,30 @@ export const Card = () => {
                             <p className="text-gray-700 text-sm mb-2">{product.description}</p>
                             <p className="text-green-600 font-semibold text-lg mb-2">{product.price} mt</p>
                             <div className="flex gap-3 justify-between mt-2">
-                                <button
+                            <button
                                     className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
                                     onClick={() => handleDetailsClick(product)}
                                 >
                                     <FiAlertCircle />
                                 </button>
-                                <button
-                                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
-                                    onClick={() => handleAddToCart(product)}
-                                >
-                                    Adicionar ao cesto
-                                </button>
+                                {!isAdmin && (
+                                    <button
+                                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+                                        onClick={() => handleAddToCart(product)}
+                                    >
+                                        Adicionar ao cesto
+                                    </button>
+                                )}
+                                
+                             
+                                {isAdmin && (
+                                    <button
+                                        className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
+                                        onClick={() => handlePurchaseComplete(product)}
+                                    >
+                                        Compra Concluída
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ))}

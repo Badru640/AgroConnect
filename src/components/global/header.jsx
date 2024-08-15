@@ -1,16 +1,17 @@
-
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { PiBasketBold } from "react-icons/pi";
-import { FaTimes } from "react-icons/fa";
-import { useCart } from "../CartContext";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { PiBasketBold } from 'react-icons/pi';
+import { FaTimes } from 'react-icons/fa';
+import { useCart } from '../CartContext';
+import { useAuth } from '../../AuthContext'; // Import useAuth
 
 export const Header = () => {
-    const { cart, removeFromCart } = useCart(); // Acesse o estado do carrinho e a função de remoção
-    const [isDropdownOpen, setDropdownOpen] = useState(false); // Gerenciar a visibilidade do dropdown
+    const { cart, removeFromCart } = useCart();
+    const { user, isAdmin, logout } = useAuth(); // Get user info and role
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
-        setDropdownOpen((prev) => !prev);
+        setDropdownOpen(prev => !prev);
     };
 
     const handleCloseDropdown = () => {
@@ -18,7 +19,6 @@ export const Header = () => {
     };
 
     const handleCheckout = () => {
-        // Redirecione para a página de checkout ou abra um modal de checkout
         console.log('Iniciar checkout');
     };
 
@@ -26,8 +26,13 @@ export const Header = () => {
         removeFromCart(productId);
     };
 
+    const handleLogout = () => {
+        logout(); // Call the logout function from AuthContext
+        handleCloseDropdown();
+    };
+
     return (
-        <div className="navbar shadow-lg rounded-xl bg-base-100">
+        <div className="navbar shadow-lg rounded-sm bg-gradient-to-r from-green-500 via-green-400 to-green-300">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -36,35 +41,44 @@ export const Header = () => {
                             className="h-5 w-5"
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke="currentColor">
+                            stroke="currentColor"
+                        >
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                                 strokeWidth="2"
-                                d="M4 6h16M4 12h16M4 18h7" />
+                                d="M4 6h16M4 12h16M4 18h7"
+                            />
                         </svg>
                     </div>
-                   <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <Link to="/profile">Perfil</Link>
-            </li>
-            <li>
-              <Link to="/settings">Configurações</Link>
-            </li>
-            <li>
-              <Link to="/help">Ajuda</Link>
-            </li>
-          </ul>
+                    <ul
+                        tabIndex={0}
+                        className="menu menu-sm dropdown-content  bg-green-300 rounded-box z-[1] mt-3 w-52 md:w-64 p-2 shadow-xl"
+                    >
+                        {isAdmin && (
+                            <li>
+                                <Link to="/dashboard">Dashboard</Link>
+                            </li>
+                        )}
+                        <li>
+                            <Link to="/profile">Perfil</Link>
+                        </li>
+                        {user ? (
+                            <li>
+                                <button onClick={handleLogout}>Sair ({user.username})</button>
+                            </li>
+                        ) : (
+                            <li>
+                                <Link to="/login">Iniciar Sessão</Link>
+                            </li>
+                        )}
+                    </ul>
                 </div>
             </div>
             <div className="navbar-center">
-                <a className="btn btn-ghost text-xl">AgroConnect</a>
+               <Link to={"/"} className="text-2xl md:text-4xl font-bold text-white animate-glow">
+                AgroConnect
+               </Link>
             </div>
             <div className="navbar-end relative flex items-center">
                 <button
@@ -129,5 +143,4 @@ export const Header = () => {
             </div>
         </div>
     );
-
 };
