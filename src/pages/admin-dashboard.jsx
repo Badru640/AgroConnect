@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Header } from "../components/global/header";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const Dashboard = () => {
   const [products, setProducts] = useState([]);
@@ -8,7 +8,7 @@ export const Dashboard = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3036/api/products/");
+        const response = await fetch("http://localhost:3035/api/products/");
         if (!response.ok) {
           throw new Error("Erro ao buscar dados da API");
         }

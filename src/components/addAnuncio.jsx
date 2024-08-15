@@ -30,7 +30,7 @@ export const AddAnuncio = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3036/api/products",
+        "http://localhost:3035/api/products",
         formData
       );
       if (response.status !== 201) {

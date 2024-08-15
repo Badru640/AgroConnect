@@ -67,7 +67,7 @@ export const Card = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch("http://localhost:3036/api/products");
+                const response = await fetch("http://localhost:3035/api/products");
                 if (!response.ok) {
                     throw new Error("Failed to fetch products");
                 }
@@ -100,7 +100,7 @@ export const Card = () => {
             );
 
             const response = await fetch(
-                `http://localhost:3036/api/products/${product._id}`,
+                `http://localhost:3035/api/products/${product._id}`,
                 {
                     method: "DELETE",
                 }
