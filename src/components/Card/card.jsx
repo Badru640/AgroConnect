@@ -7,6 +7,15 @@ import { Link } from "react-router-dom";
 
 const ProductModal = ({ product, onClose }) => {
     if (!product) return null;
+
+    // Criar a mensagem para o WhatsApp
+    const createWhatsAppMessage = () => {
+        return encodeURIComponent(`Olá! Estou interessado no produto ${product.name}.\n\nDescrição: ${product.description}\nPreço: ${product.price} mt\n\nGostaria de mais informações.`);
+    };
+
+    // Criar o link para o WhatsApp
+    const whatsappLink = `https://wa.me/1234567890?text=${createWhatsAppMessage()}`; // Substitua "1234567890" pelo número desejado
+
     return (
         <div className="fixed inset-0 bg-green-900 bg-opacity-70 flex items-center justify-center z-50">
             <div className="bg-white p-8 rounded-lg shadow-lg w-11/12 max-w-4xl relative">
@@ -26,9 +35,14 @@ const ProductModal = ({ product, onClose }) => {
                 />
                 <p className="text-gray-800 mb-4 text-lg">{product.description}</p>
                 <p className="text-green-700 font-bold text-xl mb-4">{product.price} mt</p>
-                <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
-                    Contactar
-                </button>
+                <a
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+                >
+                    Enviar Mensagem no WhatsApp
+                </a>
             </div>
         </div>
     );
@@ -38,7 +52,7 @@ export const Card = () => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { addToCart } = useCart();
-    const {  isAdmin } = useAuth(); // Get user info and role
+    const { isAdmin } = useAuth(); // Get user info and role
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -115,7 +129,7 @@ export const Card = () => {
                             <p className="text-gray-700 text-sm mb-2">{product.description}</p>
                             <p className="text-green-600 font-semibold text-lg mb-2">{product.price} mt</p>
                             <div className="flex gap-3 justify-between mt-2">
-                            <button
+                                <button
                                     className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
                                     onClick={() => handleDetailsClick(product)}
                                 >
@@ -130,7 +144,6 @@ export const Card = () => {
                                     </button>
                                 )}
                                 
-                             
                                 {isAdmin && (
                                     <button
                                         className="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800 transition"
