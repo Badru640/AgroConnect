@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Header } from "../components/global/header";
+import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
   const [Products, setProduct] = useState([]);
+  const navegate = useNavigate();
 
   useEffect(() => {
     let interval;
@@ -24,12 +26,16 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <div className="bg-white shadow rounded-lg p-6 mt-6">
-      <Link to="/" className="inline-block absolute top-2 left-2">
-        <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
-          Home Page
+    <div>
+<Header/>
+    <div className="bg-white shadow rounded-lg p-6 mt-0">
+      
+        <button 
+        onClick={() => navegate(-1) }
+        className="bg-green-500 text-white py-2 px-4 mb-6 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+          Voltar
         </button>
-      </Link>
+    
       <h2 className="text-2xl font-bold mb-4">Produtos</h2>
       <table className="w-full text-left table-auto">
         <thead>
@@ -50,5 +56,7 @@ export const Dashboard = () => {
         </tbody>
       </table>
     </div>
+    </div>
+
   );
 };
