@@ -25,7 +25,8 @@ export const LoginForm = () => {
 
         const role = isAdmin ? 'admin' : 'user';
 
-        localStorage.setItem('user', JSON.stringify({ username, role }));
+        // Armazenar as informações do usuário no localStorage, incluindo o email
+        localStorage.setItem('user', JSON.stringify({ username, email, role }));
 
         login(username, role);
 
