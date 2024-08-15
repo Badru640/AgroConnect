@@ -1,28 +1,27 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../global/header';
 
 export const ProfilePage = () => {
     const navigate = useNavigate();
 
-   
+
     const user = JSON.parse(localStorage.getItem('user'));
 
-    
+
     const username = user ? user.username : 'Usuário';
     const email = user ? user.email : 'Email não disponível';
     const role = user ? user.role : 'Visitante';
 
-    
+
     const handleLogout = () => {
-        localStorage.removeItem('user'); 
-        navigate('/login'); 
+        localStorage.removeItem('user');
+        navigate('/login');
     };
 
     return (
-        
+
         <main className="profile-page">
-            <Header/>
+            <Header />
             <section className="relative block h-[500px]">
                 <div
                     className="absolute top-0 w-full h-full bg-center bg-cover"
@@ -50,7 +49,6 @@ export const ProfilePage = () => {
                                     className="shadow-xl rounded-full h-auto align-middle border-none max-w-[150px]"
                                 />
                             </div>
-                            {/* Profile Details */}
                             <div className="text-center pt-24">
                                 <div className="mb-2 text-blueGray-600 mt-10">
                                     <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i> {role === 'admin' ? 'Administrator' : 'User'}

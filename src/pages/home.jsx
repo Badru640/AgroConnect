@@ -6,10 +6,10 @@ export const Home = () => {
 
         <div data-theme="light">
 
-            <Header/>
-            <Card/>
+            <Header />
+            <Card />
         </div>
-        
+
     )
 }
 

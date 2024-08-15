@@ -4,10 +4,10 @@ import { ProfilePage } from "../components/profile/profile"
 
 export const Profile = () => {
     return (
-<main>
-            <Header/>
+        <main>
+            <Header />
             <ProfilePage />
-            </main>
-        
+        </main>
+
     )
 }

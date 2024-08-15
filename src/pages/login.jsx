@@ -6,11 +6,11 @@ export const Login = () => {
     return (
 
         <div data-theme="light">
-            <Header/>
+            <Header />
 
-<LoginForm/>
+            <LoginForm />
         </div>
-        
+
     )
 }
 

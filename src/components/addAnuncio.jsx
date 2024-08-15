@@ -8,7 +8,7 @@ export const AddAnuncio = () => {
     name: "",
     description: "",
     price: "",
-    categoryName: "", // Alterado para categoryName
+    categoryName: "", 
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);

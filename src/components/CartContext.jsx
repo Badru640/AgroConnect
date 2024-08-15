@@ -9,14 +9,12 @@ export const CartProvider = ({ children }) => {
         setCart((prev) => {
             const existingProduct = prev.find(item => item._id === product._id);
             if (existingProduct) {
-                // Se o produto já existe, atualize a quantidade
-                return prev.map(item => 
+                return prev.map(item =>
                     item._id === product._id
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 );
             } else {
-                // Se o produto não existe, adicione ao carrinho com quantidade 1
                 return [...prev, { ...product, quantity: 1 }];
             }
         });
